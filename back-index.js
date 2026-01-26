@@ -1,12 +1,16 @@
 require('dotenv').config()
 const connectDB = require('./bd/connect')
 const express = require('express');
+const cors = require ('cors');
 const app = express();
 const port = process.env.PORT || 4000;
+app.use(cors());
 app.use (express.json ());
 
-app.use('api/v1/users', require('./routes/userRouter'));
+app.use('/api/v1/users', require('./routes/userRouter'));
+app.use('/api/v1/books', require('./routes/bookRouter'));
 
+// connect to mongoDB
 connectDB(process.env.MONGODB_URI)
 .then(() => {
     console.log("connect to mongoDB");
